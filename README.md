@@ -23,6 +23,7 @@ Publish the Docker container and set the following environment variables:
 
 - `DSN`: Postgres connection string
 - `API_KEY`: API key required in requests
+- `GIN_MODE`: Use `release` if using in production
 
 ### Database
 
@@ -68,7 +69,7 @@ Records an event occurrence with the provided name. The API automatically adds a
 
 `GET /stats?start=t1&end=t2`
 
-This endpoint returns recorded event counts by event name. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
+Returns recorded event counts by event name. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
 
 **Response:**  
 ```json

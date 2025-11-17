@@ -5,6 +5,8 @@ import (
 	"log"
 	"strings"
 	"time"
+
+	_ "github.com/lib/pq"
 )
 
 func ConnectToDB(dsn string) *sql.DB {
