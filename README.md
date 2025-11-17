@@ -4,7 +4,7 @@
 
 # Capibara
 
-Capibara is an event counting API that lets you quickly assess how often something happens. It can be used for monitoring, product analytics, and more.
+Capibara is an event counting API. It lets you quickly measure how often something happens. Common use cases include monitoring, product analytics, and more.
 
 Capibara is built with Go, Gin, Postgres, and restraint.
 
@@ -12,24 +12,23 @@ Capibara is built with Go, Gin, Postgres, and restraint.
 
 - Record events by name via HTTP POST
 - Retrieve event counts, optionally filtered by time range
-- Delete all records for a specific event name
+- Delete all records for a specific event
 - Delete all records for all events
 - API key authentication
-- Fast and small
 
 ## Setup
 
 ### Container
 
-Publish the Docker container and set the following environment variables:
+Run the Docker container with the following environment variables:
 
 - `DSN`: Postgres connection string
 - `API_KEY`: API key required in requests
-- `GIN_MODE`: Use `release` if using in production
+- `GIN_MODE`: Use `release` in production
 
 ### Database
 
-Create the events table:
+Create the `events` table:
 
 ```sql
 CREATE TABLE events (
@@ -43,15 +42,15 @@ CREATE INDEX idx_events_ts ON events(ts);
 
 ## Endpoints
 
-### Authentication
+### Authentication and Headers
 
-The header `X-API-Key` is used for authentication.
+Requests must include an `X-API-Key` header containing the configured API key. Endpoints that accept a JSON body (`/event`, `/delete`) should be called with a `Content-Type` header set to `application/json`.
 
 ### Record Event
 
 `POST /event`
 
-Records an event occurrence with the provided name. The API automatically adds a Unix timestamp set to the time of ingestion.
+Records an event occurrence with the provided name. The API automatically adds a Unix timestamp (in seconds) corresponding to the ingestion time.
 
 **Body:**  
 ```json
@@ -71,7 +70,7 @@ Records an event occurrence with the provided name. The API automatically adds a
 
 `GET /stats?start=t1&end=t2`
 
-Returns recorded event counts by event name. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
+Returns recorded event counts by event name. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps (in seconds), allowing custom aggregation. The bounds are inclusive, and either parameter may be omitted.
 
 **Response:**  
 ```json
@@ -85,7 +84,7 @@ Returns recorded event counts by event name. The optional query parameters `star
 
 `POST /delete`
 
-Deletes all records for the specified event name.
+Deletes all records associated with the specified event name. Other events are unaffected.
 
 **Body:**  
 ```json
@@ -97,7 +96,7 @@ Deletes all records for the specified event name.
 **Response:**  
 ```json
 {
-  "status": "42 matching records deleted"
+  "status": "42 matching record(s) deleted"
 }
 ```
 
@@ -118,7 +117,7 @@ Deletes all records for all events.
 
 `GET /ping`
 
-Returns a simple response for health checks.
+Returns a simple response for health checks. This endpoint does not require authentication.
 
 **Response:**  
 ```json
@@ -129,7 +128,7 @@ Returns a simple response for health checks.
 
 ## Contributing
 
-This software is considered complete and finished. If you require changes, please fork the repository.
+This software is considered complete. If you require changes, please fork the repository.
 
 ## License
 
