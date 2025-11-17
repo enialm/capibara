@@ -87,6 +87,6 @@ func Route(r *gin.Engine, db *sql.DB) {
 	})
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"status": "pong"})
+		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})
 }

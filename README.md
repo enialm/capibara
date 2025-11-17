@@ -112,6 +112,19 @@ Deletes all records for all events.
 }
 ```
 
+### Health Check
+
+`GET /ping`
+
+Returns a simple response for health checks.
+
+**Response:**  
+```json
+{
+  "message": "pong"
+}
+```
+
 ## Contributing
 
 This software is considered complete and finished. If you require changes, please fork the repository.
