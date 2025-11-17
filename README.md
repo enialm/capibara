@@ -1,8 +1,8 @@
-# Capibara
-
 <img align="right" width="120px" src="https://messier.ch/assets/capibara.png">
 
-**Capibara** is an event counting API. It can be used in countless contexts, from monitoring to product analytics and more. It is especially useful when you want to quickly assess what happened and how often.
+# Capibara
+
+**Capibara** is an event counting API that lets you quickly assess how often something happens. It can be used for monitoring, product analytics, and more.
 
 Capibara is built with Go, Gin, Postgres, and restraint.
 
@@ -68,7 +68,7 @@ Records an event occurrence with the provided name. The API automatically adds a
 
 `GET /stats?start=t1&end=t2`
 
-This endpoint returns recorded event counts. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
+This endpoint returns recorded event counts by event name. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
 
 **Response:**  
 ```json
