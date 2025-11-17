@@ -24,6 +24,11 @@ func main() {
 	defer db.Close()
 
 	router := gin.Default()
+
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "pong"})
+	})
+
 	router.Use(func(c *gin.Context) {
 		if c.GetHeader("X-API-Key") != apiKey {
 			c.AbortWithStatus(401)
