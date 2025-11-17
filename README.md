@@ -1,6 +1,6 @@
-[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=enialm%2Fcapibara)](https://blazingly.fast)
-
 <img align="right" width="120px" src="https://messier.ch/assets/capibara.png">
+
+[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=enialm%2Fcapibara)](https://blazingly.fast)
 
 # Capibara
 
