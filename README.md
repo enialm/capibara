@@ -4,7 +4,7 @@
 
 # Capibara
 
-Capibara is an event counting API. It lets you quickly measure how often something happens. Common use cases include monitoring, product analytics, and more.
+Capibara is an event counting API that lets you quickly measure how often something happens. Common use cases include monitoring, product analytics, and more.
 
 Capibara is built with Go, Gin, Postgres, and restraint.
 
@@ -17,14 +17,6 @@ Capibara is built with Go, Gin, Postgres, and restraint.
 - API key authentication
 
 ## Setup
-
-### Container
-
-Run the Docker container with the following environment variables:
-
-- `DSN`: Postgres connection string
-- `API_KEY`: API key required in requests
-- `GIN_MODE`: Use `release` in production
 
 ### Database
 
@@ -40,11 +32,19 @@ CREATE TABLE events (
 CREATE INDEX idx_events_ts ON events(ts);
 ```
 
+### Container
+
+Run the Docker container with the following environment variables:
+
+- `DSN`: Postgres connection string
+- `API_KEY`: API key required in requests
+- `GIN_MODE`: use `release` in production
+
 ## Endpoints
 
 ### Authentication and Headers
 
-Requests must include an `X-API-Key` header containing the configured API key. Endpoints that accept a JSON body (`/event`, `/delete`) should be called with a `Content-Type` header set to `application/json`.
+Requests must include an `X-API-Key` header containing the configured API key. Endpoints that accept a JSON body (`/event`, `/delete`) must include a `Content-Type: application/json` header.
 
 ### Record Event
 
@@ -84,7 +84,7 @@ Returns recorded event counts by event name. The optional query parameters `star
 
 `POST /delete`
 
-Deletes all records associated with the specified event name. Other events are unaffected.
+Deletes all records associated with the specified event name. Records for other events are unaffected.
 
 **Body:**  
 ```json
