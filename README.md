@@ -1,8 +1,10 @@
+[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=enialm%2Fcapibara)](https://blazingly.fast)
+
 <img align="right" width="120px" src="https://messier.ch/assets/capibara.png">
 
 # Capibara
 
-**Capibara** is an event counting API that lets you quickly assess how often something happens. It can be used for monitoring, product analytics, and more.
+Capibara is an event counting API that lets you quickly assess how often something happens. It can be used for monitoring, product analytics, and more.
 
 Capibara is built with Go, Gin, Postgres, and restraint.
 

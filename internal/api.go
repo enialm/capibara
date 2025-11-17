@@ -73,7 +73,7 @@ func Route(r *gin.Engine, db *sql.DB) {
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"status": fmt.Sprintf("%d matching records deleted", n),
+			"status": fmt.Sprintf("%d matching record(s) deleted", n),
 		})
 	})
 
