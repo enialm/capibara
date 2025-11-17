@@ -63,3 +63,17 @@ func GetEventCounts(db *sql.DB, start, end *int64) (map[string]int, error) {
 	}
 	return counts, nil
 }
+
+func DeleteEventsByName(db *sql.DB, event string) (int64, error) {
+	res, err := db.Exec("DELETE FROM events WHERE event = $1", event)
+	if err != nil {
+		return 0, err
+	}
+	n, err := res.RowsAffected()
+	return n, err
+}
+
+func TruncateEvents(db *sql.DB) error {
+	_, err := db.Exec("TRUNCATE TABLE events")
+	return err
+}

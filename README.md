@@ -1,11 +1,17 @@
 # Capibara
 
-**Capibara** is an event counting API. It can be used in countless contexts, from monitoring to product analytics and more. It is built with Go, Gin, Postgres, and restraint.
+<img align="right" width="120px" src="https://messier.ch/assets/capibara.png">
+
+**Capibara** is an event counting API. It can be used in countless contexts, from monitoring to product analytics and more. It is especially useful when you want to quickly assess what happened and how often.
+
+Capibara is built with Go, Gin, Postgres, and restraint.
 
 ## Features
 
 - Record events by name via HTTP POST
 - Retrieve event counts, optionally filtered by time range
+- Delete all records for a specific event name
+- Delete all records for all events
 - API key authentication
 - Fast and small
 
@@ -38,9 +44,11 @@ CREATE INDEX idx_events_ts ON events(ts);
 
 The header `X-API-Key` is used for authentication.
 
-### Add Event
+### Record Event
 
 `POST /event`
+
+Records an event occurrence with the provided name. The API automatically adds a Unix timestamp set to the time of ingestion.
 
 **Body:**  
 ```json
@@ -49,11 +57,18 @@ The header `X-API-Key` is used for authentication.
 }
 ```
 
+**Response:**  
+```json
+{
+  "status": "ok"
+}
+```
+
 ### Get Event Stats
 
 `GET /stats?start=t1&end=t2`
 
-The query parameters `start` and `end` can be used to filter results with unix timestamps.
+This endpoint returns recorded event counts. The optional query parameters `start` and `end` can be used to filter results by Unix timestamps.
 
 **Response:**  
 ```json
@@ -63,9 +78,42 @@ The query parameters `start` and `end` can be used to filter results with unix t
 }
 ```
 
+### Delete Records by Name
+
+`POST /delete`
+
+Deletes all records for the specified event name.
+
+**Body:**  
+```json
+{
+  "event": "event_name"
+}
+```
+
+**Response:**  
+```json
+{
+  "status": "42 matching records deleted"
+}
+```
+
+### Delete All Records
+
+`POST /truncate`
+
+Deletes all records for all events.
+
+**Response:**  
+```json
+{
+  "status": "all records deleted"
+}
+```
+
 ## Contributing
 
-This software is considered complete and finished. Fork it if you want something else.
+This software is considered complete and finished. If you require changes, please fork the repository.
 
 ## License
 

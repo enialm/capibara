@@ -2,6 +2,7 @@ package internal
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -55,5 +56,33 @@ func Route(r *gin.Engine, db *sql.DB) {
 			return
 		}
 		c.JSON(http.StatusOK, counts)
+	})
+
+	r.POST("/delete", func(c *gin.Context) {
+		var req struct {
+			Event string `json:"event" binding:"required"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid event"})
+			return
+		}
+		n, err := DeleteEventsByName(db, req.Event)
+		if err != nil {
+			log.Printf("DeleteEventsByName error: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "DB error"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"status": fmt.Sprintf("%d matching records deleted", n),
+		})
+	})
+
+	r.POST("/truncate", func(c *gin.Context) {
+		if err := TruncateEvents(db); err != nil {
+			log.Printf("TruncateEvents error: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "DB error"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"status": "all records deleted"})
 	})
 }
